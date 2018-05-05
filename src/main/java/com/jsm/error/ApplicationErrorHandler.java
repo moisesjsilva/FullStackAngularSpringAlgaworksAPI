@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.flywaydb.core.internal.util.ExceptionUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.jsm.service.exceptions.ObjectNotFoundException;
 import com.jsm.service.exceptions.ObjetoJaCadastradoException;
+import com.jsm.service.exceptions.PessoaInativaException;
 
 @ControllerAdvice
 public class ApplicationErrorHandler extends ResponseEntityExceptionHandler {
@@ -78,6 +81,30 @@ public class ApplicationErrorHandler extends ResponseEntityExceptionHandler {
 		List<FieldError> erros = new ArrayList<>();
 		erros.add(error);
 		return handleExceptionInternal(ex, erros, headers, status, request);
+	}
+	
+	//*ConstraintViolationException
+	@ExceptionHandler({ConstraintViolationException.class})
+	public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,HttpServletRequest request){
+		int status = HttpStatus.BAD_REQUEST.value();
+		DefaultError error = new DefaultError(System.currentTimeMillis(), status, getProperty("msg.requisicao_invalida"), ExceptionUtils.getRootCause(ex).getMessage(), request.getRequestURI());
+			
+		
+		List<DefaultError> errors = new ArrayList<>();
+		errors.add(error);
+		return ResponseEntity.status(status).body(errors);
+	}
+	
+	
+	@ExceptionHandler({PessoaInativaException.class})
+	public ResponseEntity<Object> handlePessoaInativaException(PessoaInativaException ex,HttpServletRequest request){
+		int status = HttpStatus.BAD_REQUEST.value();
+		DefaultError error = new DefaultError(System.currentTimeMillis(), status, getProperty("msg.requisicao_invalida"), ExceptionUtils.getRootCause(ex).getMessage(), request.getRequestURI());
+			
+		
+		List<DefaultError> errors = new ArrayList<>();
+		errors.add(error);
+		return ResponseEntity.status(status).body(errors);
 	}
 	private String getProperty(String propName) {
 		return messageSource.getMessage(propName,null, Locale.getDefault());

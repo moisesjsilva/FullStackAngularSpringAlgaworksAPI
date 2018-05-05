@@ -1,4 +1,4 @@
-package com.jsm.resorce;
+package com.jsm.resource;
 
 import java.util.List;
 

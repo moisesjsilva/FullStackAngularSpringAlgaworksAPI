@@ -1,4 +1,4 @@
-package com.jsm.resorce;
+package com.jsm.resource;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public abstract class ResourceImpl<T,S extends Service<T>> implements Resource<T
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
 		service.findById(id);
 		service.deleteById(id);
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")

@@ -2,10 +2,9 @@ package com.jsm.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,8 @@ public abstract class ServiceImpl<T, RE extends JpaRepository<T, Long>> implemen
 		//System.out.println(t);
 		if(!t.isPresent()) {
 			//System.out.println("Passou Aqui 2");
-			throw new ObjectNotFoundException("Objeto não encontrado com ID: "+id);
+			
+			throw new ObjectNotFoundException(String.format("Objeto não encontrado tipo :[ %s.id=%d ]",getClassNameFromObject(),id));
 		}
 		return t;
 	}
@@ -106,6 +106,12 @@ public abstract class ServiceImpl<T, RE extends JpaRepository<T, Long>> implemen
 		return repository;
 	}
 	
-	
+	public String getClassNameFromObject()
+	{
+		Class<T> type = ((Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+		
+		
+		return type.getSimpleName();
+	}
 
 }

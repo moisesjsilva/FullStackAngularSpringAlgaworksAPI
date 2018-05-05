@@ -1,4 +1,4 @@
-package com.jsm.resorce;
+package com.jsm.resource;
 
 import javax.validation.Valid;
 
