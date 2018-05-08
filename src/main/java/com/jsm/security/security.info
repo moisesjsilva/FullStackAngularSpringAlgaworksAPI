@@ -1,0 +1,25 @@
+# CONFIGURANDO O POSTMAN PARA PEGAR O TOKEN
+1 - Faça um requisição post para localhost:8080/oauth/token, definindo authorization 
+como basic e passando o client e secret
+2 - na abra body defina
+client=angular
+username=admin
+password=admin
+grant_type=password
+3- Faça a requisição
+
+4 - em uma nova aba crie um requisição para um uri protegida e defina
+como authorization com oauth2 e coloque 
+Bearer dfjkajdfkajdfkjakjf <- access_token retornado
+
+
+
+# UTILIZANDO O REFRESH TOKEN PARA PEGAR UM TOKEN VALIDO
+
+1 - Crie um requisição Post para localhost:8080/oauth/token
+em authorization defina com basic e insira o client e secret
+no body defina como x-www-form-urlencoded e defina as propriedades
+grant_type = refresh_token
+refresh_token= dfadlfakdflakdk <- esse é o refresh token retornado.
+
+Utilize o token retornado na requisição do recurso.

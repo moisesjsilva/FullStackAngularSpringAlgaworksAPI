@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jsm.service.exceptions.ObjectNotFoundException;
 
-public abstract class ServiceImpl<T, RE extends JpaRepository<T, Long>> implements Service<T> {
+public abstract class ServiceImpl< T, RE extends JpaRepository<T, Long>> implements Service<T> {
 
 	@Autowired
 	private RE repository;
@@ -109,6 +109,7 @@ public abstract class ServiceImpl<T, RE extends JpaRepository<T, Long>> implemen
 	public String getClassNameFromObject()
 	{
 		Class<T> type = ((Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+		
 		
 		
 		return type.getSimpleName();

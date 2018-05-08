@@ -10,4 +10,5 @@ import com.jsm.service.CategoriaService;
 @RequestMapping("/categorias")
 public class CategoriaResource extends ResourceImpl<Categoria, CategoriaService> {
 
+	
 }

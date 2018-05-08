@@ -1,5 +1,6 @@
 package com.jsm.resource;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import com.jsm.event.RecursoCriadoEvent;
 import com.jsm.service.Service;
 
 public abstract class ResourceImpl<T,S extends Service<T>> implements Resource<T> {
+	
 
 	@Autowired
 	private S service;
@@ -43,6 +46,7 @@ public abstract class ResourceImpl<T,S extends Service<T>> implements Resource<T
 		return ResponseEntity.status(HttpStatus.CREATED).body(object);
 	}
 
+	
 	@GetMapping
 	@Override
 	public ResponseEntity<List<T>> findAll() {
@@ -78,5 +82,14 @@ public abstract class ResourceImpl<T,S extends Service<T>> implements Resource<T
 		T t = service.update(id, object);
 		return ResponseEntity.ok(t);
 	}
+
+	public S getService() {
+		return service;
+	}
+	
+	
+	
+	
+	
 
 }
