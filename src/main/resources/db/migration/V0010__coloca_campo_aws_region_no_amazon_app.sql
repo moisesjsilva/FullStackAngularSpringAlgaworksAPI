@@ -1,0 +1,1 @@
+alter table amazon_app add column aws_region varchar(20) default 'sa-east-1';

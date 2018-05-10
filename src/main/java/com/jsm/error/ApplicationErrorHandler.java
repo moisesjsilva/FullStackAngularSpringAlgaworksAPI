@@ -67,6 +67,18 @@ public class ApplicationErrorHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).body(errors);
 	}
 	
+	
+//	@ExceptionHandler({ObjetoJaCadastradoException.class})
+//	public ResponseEntity<Object> objetoJaCadastradoExceptionHandler(ObjetoJaCadastradoException ex,HttpServletRequest request){
+//		int status = HttpStatus.BAD_REQUEST.value();
+//		DefaultError error = new DefaultError(System.currentTimeMillis(), status, getProperty("msg.requisicao_invalida"), ex.getMessage(), request.getRequestURI());
+//			
+//		
+//		List<DefaultError> errors = new ArrayList<>();
+//		errors.add(error);
+//		return ResponseEntity.status(status).body(errors);
+//	}
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -14,10 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jsm.repository.listener.LancamentoAnexoListener;
 
+@EntityListeners(LancamentoAnexoListener.class)
 @Entity
 @Table(name="lancamento")
 public class Lancamento implements Serializable{
@@ -47,13 +53,17 @@ public class Lancamento implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
+		
+	private String anexo;
+	@Transient
+	private String urlAnexo;
 	
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private LancamentoTipo tipo;
 	
-	
+	@JsonIgnoreProperties({"contatos","endereco"})
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name="pessoa_id")
@@ -153,6 +163,37 @@ public class Lancamento implements Serializable{
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	
+	
+	
+	public String getAnexo() {
+		return anexo;
+	}
+
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
+	
+	
+	
+
+
+	public String getUrlAnexo() {
+		return urlAnexo;
+	}
+
+
+	public void setUrlAnexo(String urlAnexo) {
+		this.urlAnexo = urlAnexo;
+	}
+
+
+	@Transient
+	@JsonIgnore
+	public boolean isReceita() {
+		return LancamentoTipo.RECEITA.equals(this.tipo);
 	}
 
 

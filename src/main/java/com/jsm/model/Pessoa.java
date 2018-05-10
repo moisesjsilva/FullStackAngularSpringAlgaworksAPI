@@ -1,14 +1,20 @@
 package com.jsm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -27,6 +33,11 @@ public class Pessoa implements Serializable {
 	
 	@Embedded @Valid
 	private Endereco endereco;
+	
+	@JsonIgnoreProperties(value="pessoa")
+	@Valid
+	@OneToMany(mappedBy="pessoa", cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<Contato> contatos = new ArrayList<>();
 
 	public Pessoa() {
 		super();
@@ -63,6 +74,16 @@ public class Pessoa implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	
+	
+
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
 	}
 
 	@Override

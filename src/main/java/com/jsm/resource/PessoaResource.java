@@ -48,7 +48,7 @@ public class PessoaResource extends ResourceImpl<Pessoa, PessoaService> {
 		return ResponseEntity.ok(pessoa);
 	}
 	@Override
-	public ResponseEntity<Pessoa> save(@Valid Pessoa object, HttpServletResponse response) {
+	public ResponseEntity<Pessoa> save(@Valid @RequestBody Pessoa object, HttpServletResponse response) {
 		
 		return super.save(object, response);
 	}

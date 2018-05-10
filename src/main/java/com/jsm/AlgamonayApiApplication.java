@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
@@ -12,9 +13,11 @@ public class AlgamonayApiApplication implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	private static ApplicationContext APPLICATION_CONTEXT;
+	
 	
 	public static void main(String[] args) {
-		SpringApplication.run(AlgamonayApiApplication.class, args);
+		APPLICATION_CONTEXT = SpringApplication.run(AlgamonayApiApplication.class, args);
 	}
 
 	@Override
@@ -24,5 +27,10 @@ public class AlgamonayApiApplication implements CommandLineRunner {
 		
 		
 		
+	}
+	
+	
+	public static <T>  T getBean(Class<T> type){
+		return APPLICATION_CONTEXT.getBean(type);
 	}
 }
